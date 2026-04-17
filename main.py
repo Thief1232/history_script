@@ -75,15 +75,25 @@ def plot_top_domains(
             "matplotlib is required for plotting. Install it with: pip install matplotlib"
         ) from error
 
-    most_common = domain_counts.most_common(limit)
+    most_common = domain_counts.most_common()
+    common = most_common[:10:]
+    others = most_common[10::]
+
     if not most_common:
         raise ValueError("No browser history entries were found for plotting")
 
-    labels = [domain for domain, _ in most_common]
-    visits = [count for _, count in most_common]
+    labels = [domain for domain, _ in common]
+    visits = [count for _, count in common]
+    all_visits = [count for _, count in others]
+
+    # colors
+    bar_colors = ['maroon', 'darkblue', 'wheat', 'green', 'gray', 'purple']
 
     plt.figure(figsize=(12, 6))
-    plt.bar(labels, visits)
+    p = plt.bar(labels, visits, color=bar_colors)
+    i = plt.bar("others", len(all_visits))
+    plt.bar_label(p, padding=3)
+    plt.bar_label(i, padding=3)
     plt.title("Most visited Firefox sites")
     plt.xlabel("Domain")
     plt.ylabel("Visits")
