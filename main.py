@@ -51,6 +51,10 @@ def extract_domain(url: str) -> str | None:
     if domain.startswith("www."):
         domain = domain[4:]
 
+    parts = domain.split(".")
+    if len(parts) >= 2:
+        domain = ".".join(parts[-2:])
+
     return domain or None
 
 
@@ -82,7 +86,7 @@ def plot_top_domains(
         raise ValueError("No browser history entries were found for plotting")
 
     labels, visits = zip(*common)
-    other_visits = sum(count for _, count in others) 
+    other_visits = sum(count for _, count in others)
     other_count = len(others)
 
     # colors
