@@ -82,8 +82,7 @@ def plot_top_domains(
     if not most_common:
         raise ValueError("No browser history entries were found for plotting")
 
-    labels = [domain for domain, _ in common]
-    visits = [count for _, count in common]
+    labels, visits = [(domain, count) for domain, count in common]
     all_visits = [count for _, count in others]
 
     # colors
